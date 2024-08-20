@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://jisblee.me:3306/rg?autoReconnect=true&amp;verifyServerCertificate=true&amp;useSSL=true&amp;requireSSL=true&amp;trustCertificateKeyStoreUrl=file:///home/ubuntu/mysql_certs_2024/truststore&amp;trustCertificateKeyStorePassword=jiseob9123&amp;clientCertificateKeyStoreUrl=file:///home/ubuntu/mysql_certs_2024/keystore&amp;clientCertificateKeyStorePassword=jiseob9123</property>
+        <property name="hibernate.connection.username">rg</property>
+        <property name="hibernate.connection.password">jiseob9123</property>
+        <property name="hibernate.connection.pool_size">30</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.show_sql">true</property>
+        <!-- <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property> -->
+
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.min_size">10</property>
+		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.acquire_increment">1</property>
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.timeout">1800</property>
+		<property name="hibernate.c3p0.validate">1800</property>
+		<property name="hibernate.c3p0.unreturnedConnectionTimeout">30</property>
+		<property name="hibernate.c3p0.debugUnreturnedConnectionStackTraces">true</property>
+
+		<mapping class="rg.jwt.entity.Board"/>
+		<mapping class="rg.jwt.entity.BoardArticle"/>
+		
+    </session-factory>
+</hibernate-configuration>

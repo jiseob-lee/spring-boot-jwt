@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="spring_jwt" basedir=".">
+
+	<!-- 빌드 환경 설정 -->
+	<property name="target.dir" location="./target" />
+	<property name="key_file_path" value="/var/jenkins_home/.ssh/id_rsa"/>
+	<property name="was.war.filename" value="rg-0.0.1-SNAPSHOT.war" />
+	<property name="deploy.target.path" value="/home/tomcat" />
+	<property name="was.ssh.port" value="22" />
+	<property name="was.user.id" value="tomcat" />
+	<property name="was.server.ip" value="jisblee.me" />
+	
+	
+    <target name="init">
+        <tstamp>
+            <format property="DAYTIME" pattern="yyyyMMddHHmmss" />
+        </tstamp>
+        <property name="build.datetime" value="${DAYTIME}" />
+        <property name="deploy.war.filename" value="rg-0.0.1-SNAPSHOT.war" />
+    </target>
+	
+	
+    <!-- WAR 파일 생성 -->
+    <target name="make.war.deploy.file" depends="init">
+        <echo>=======================================================</echo>
+        <echo>[start] Make WAR Deploy File</echo>
+        <echo>=======================================================</echo>
+        <delete file="${target.dir}/${was.war.filename}" />
+        <war destfile="${target.dir}/${was.war.filename}" basedir="${target.dir}/rg-0.0.1-SNAPSHOT">
+            <include name="**/*" />
+        </war>
+        <echo>=====================================================</echo>
+        <echo>[end] Make WAR Deploy File</echo>
+        <echo>=====================================================</echo>
+    </target>    
+
+
+    <target name="tran.war" depends="init">
+        <echo>=====================================================</echo>
+        <echo>trans war file dev was</echo>
+        <echo>=====================================================</echo>
+        <echo>${key_file_path}</echo>
+        <echo>${deploy.war.filename}</echo>
+        <scp file="${target.dir}/${was.war.filename}" 
+        	todir="${was.user.id}@${was.server.ip}:${deploy.target.path}/apache-tomcat-10.1.28/${deploy.war.filename}" 
+        	keyfile="${key_file_path}"
+        	passphrase="jiseob9123" 
+        	port="${was.ssh.port}" 
+        	sftp="true" 
+        	trust="true">
+        </scp>
+    	<!--
+    	<sshexec host="${was.server.ip}" port="${was.ssh.port}" username="${was.user.id}" keyfile="${key_file_path}"
+    	    trust="yes" failonerror="true" passphrase="jiseob9123"
+    		command="if pgrep -f apache-tomcat-10.1.28; then ps aux | grep -i 'home/tomcat' | grep 'java' | awk '{print $2}' | xargs kill -9 ; else echo '123'; fi; echo '11'; sleep 10s; cd /home/tomcat/apache-tomcat-10.1.28/webapps/ROOT; echo '22'; rm -rf *; cd ../..; mv rg-0.0.1-SNAPSHOT.war ./webapps/ROOT/; echo '33'; cd ./webapps/ROOT; jar xf rg-0.0.1-SNAPSHOT.war; echo '44'; mv rg-0.0.1-SNAPSHOT.war /home/tomcat/backup/rg-0.0.1-SNAPSHOT_`date +%Y%m%d%H%M%S`.war; echo '55'; rm -f ./WEB-INF/lib/mysql-connector-j-8.3.0.jar; /home/tomcat/apache-tomcat-10.1.28/bin/startup.sh"/>
+    	-->
+    	<sshexec host="${was.server.ip}" port="${was.ssh.port}" username="${was.user.id}" keyfile="${key_file_path}"
+    	    trust="yes" failonerror="true" passphrase="jiseob9123"
+    		command="echo '00'; /home/tomcat/apache-tomcat-10.1.28/bin/shutdown.sh; echo '11'; sleep 10s; cd /home/tomcat/apache-tomcat-10.1.28/webapps/ROOT; echo '22'; rm -rf *; cd ../..; mv rg-0.0.1-SNAPSHOT.war ./webapps/ROOT/; echo '33'; cd ./webapps/ROOT; jar xf rg-0.0.1-SNAPSHOT.war; echo '44'; mv rg-0.0.1-SNAPSHOT.war /home/tomcat/backup/rg-0.0.1-SNAPSHOT_`date +%Y%m%d%H%M%S`.war; echo '55'; rm -f ./WEB-INF/lib/mysql-connector-j-8.3.0.jar; /home/tomcat/apache-tomcat-10.1.28/bin/startup.sh;"/>
+
+    </target>
+
+</project>
