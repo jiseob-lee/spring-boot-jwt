@@ -56,7 +56,9 @@ public class BatchConfig {
         	String formattedDate = now.format(formatter);
         	
         	System.out.println(formattedDate + " : ***** hello batch! *****");
-        	// 원하는 비지니스 로직 작성    
+        	
+        	// 원하는 비지니스 로직 작성
+        	
         	return RepeatStatus.FINISHED;
         });
     }
