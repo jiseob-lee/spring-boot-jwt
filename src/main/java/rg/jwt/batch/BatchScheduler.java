@@ -65,6 +65,7 @@ public class BatchScheduler {
     @Scheduled(cron = "0 0/5 * * * *") // 10초마다 실행
     public void runJob() {
         String time = LocalDateTime.now().toString();
+        System.out.println("time : " + time);
         try {
             Job job = jobRegistry.getJob("testJob"); // job 이름
             JobParametersBuilder jobParam = new JobParametersBuilder().addString("time", time);

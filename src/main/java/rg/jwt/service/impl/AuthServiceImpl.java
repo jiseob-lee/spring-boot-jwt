@@ -13,6 +13,7 @@ import rg.jwt.dto.CustomUserInfoDto;
 import rg.jwt.dto.LoginRequestDto;
 import rg.jwt.dto.TokenDto;
 import rg.jwt.entity.Member;
+import rg.jwt.mapper.TokenMapper;
 import rg.jwt.repository.MemberRepository;
 import rg.jwt.service.AuthService;
 import rg.jwt.util.JwtUtil;
@@ -27,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder encoder;
     private final ModelMapper modelMapper;
-
+    private final TokenMapper tokenMapper;
     @Override
     @Transactional
     public TokenDto login(LoginRequestDto dto) {
@@ -51,6 +52,12 @@ public class AuthServiceImpl implements AuthService {
         //TokenDto accessToken = jwtUtil.createAccessToken(member);
         
         return accessToken;
+    }
+    
+    @Override
+    @Transactional
+    public void logout(String email) {
+    	tokenMapper.deleteRefreshToken(email);
     }
 }
 
