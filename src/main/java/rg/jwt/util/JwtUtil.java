@@ -5,7 +5,9 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,9 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import rg.jwt.dto.CustomUserInfoDto;
 import rg.jwt.dto.TokenDto;
+import rg.jwt.entity.RefreshToken;
 import rg.jwt.entity.UserRoles;
+import rg.jwt.repository.RefreshTokenRepository;
 
 /**
  * [JWT 관련 메서드를 제공하는 클래스]
@@ -32,6 +36,9 @@ public class JwtUtil {
     private final Key key;
     private final long accessTokenExpTime;
     private final long refreshExpireTime;
+    
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
     
     public JwtUtil(
             @Value("${jwt.secret}") String secretKey,
@@ -172,7 +179,12 @@ public class JwtUtil {
         // refresh 객체에서 refreshToken 추출
         //String refreshToken = refreshTokenObj.getRefreshToken();
 
+    	Optional<RefreshToken> refreshTokenCheck = refreshTokenRepository.findByRefreshToken(refreshToken);
 
+    	if (!refreshTokenCheck.isPresent()) {
+    		return null;
+    	}
+    	
         try {
             // 검증
             //Jws<Claims> claims = Jwts.parser().setSigningKey(refreshSecretKey).parseClaimsJws(refreshToken);
