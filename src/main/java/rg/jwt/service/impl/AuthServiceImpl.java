@@ -15,6 +15,7 @@ import rg.jwt.dto.TokenDto;
 import rg.jwt.entity.Member;
 import rg.jwt.mapper.TokenMapper;
 import rg.jwt.repository.MemberRepository;
+import rg.jwt.repository.RefreshTokenRepository;
 import rg.jwt.service.AuthService;
 import rg.jwt.util.JwtUtil;
 
@@ -29,6 +30,8 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder encoder;
     private final ModelMapper modelMapper;
     private final TokenMapper tokenMapper;
+    private final RefreshTokenRepository refreshTokenRepository;
+    
     @Override
     @Transactional
     public TokenDto login(LoginRequestDto dto) {
@@ -44,7 +47,12 @@ public class AuthServiceImpl implements AuthService {
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
         
-        log.info(member.toString());
+        //log.info("member : " + member.toString());
+        
+        //String encodedPwd = encoder.encode(password);
+        //log.info("rawPwd : " + password);
+        //log.info("encodedPwd : " + encodedPwd);
+        //log.info("password : " + member.getPassword());
         
         CustomUserInfoDto info = modelMapper.map(member, CustomUserInfoDto.class);
         //CustomUserInfoDto info = new CustomUserInfoDto(member.getMemberId(), member.getEmail(), member.getName(), member.getPassword(), member.getRoles());
@@ -57,7 +65,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public void logout(String email) {
-    	tokenMapper.deleteRefreshToken(email);
+    	//tokenMapper.deleteRefreshToken(email);
+    	refreshTokenRepository.deleteByKeyEmail(email);
     }
 }
 
