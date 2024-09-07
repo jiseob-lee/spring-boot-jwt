@@ -13,6 +13,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
+import lombok.Builder;
+import rg.jwt.dto.CustomBoardArticleDto;
 import rg.jwt.util.DateTimeUtil;
 
 @Entity
@@ -179,4 +181,29 @@ public class BoardArticle {
 	public void setDateModified(String dateModified) {
 		this.dateModified = DateTimeUtil.parseTimestamp(dateModified);
 	}
+	
+
+	@Builder
+	public BoardArticle(int boardIdx, String subject, String content, int hitCount, String dateCreated,
+			String userIdCreated, String dateModified, String userIdModified, char deleteYn, char openYn,
+			String subjectEng, String contentEng) {
+		this.boardIdx = boardIdx;
+		this.subject = subject;
+		this.content = content;
+		this.hitCount = hitCount;
+		//this.dateCreated = dateCreated;
+		setDateCreated(dateCreated);
+		this.userIdCreated = userIdCreated;
+		//this.dateModified = dateModified;
+		setDateModified(dateModified);
+		this.userIdModified = userIdModified;
+		this.deleteYn = deleteYn;
+		this.openYn = openYn;
+		this.subjectEng = subjectEng;
+		this.contentEng = contentEng;
+		//this.boardName = boardName;
+		//this.boardNameEn = boardNameEn;
+	}
+
+	public BoardArticle() {}
 }

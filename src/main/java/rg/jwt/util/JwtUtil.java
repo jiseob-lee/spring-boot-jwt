@@ -131,7 +131,10 @@ public class JwtUtil {
      * @return User ID
      */
     public String getUserId(String token) {
-        return String.valueOf(parseClaims(token).get("memberId"));
+    	String userId = String.valueOf(parseClaims(token).get("memberId"));
+    	log.info("userId 222111 : " + userId);
+    	return userId;
+        //return String.valueOf(parseClaims(token).get("memberId"));
     }
 
 

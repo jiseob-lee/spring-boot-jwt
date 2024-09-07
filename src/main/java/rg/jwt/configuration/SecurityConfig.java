@@ -29,7 +29,10 @@ public class SecurityConfig  {
     private final JwtUtil jwtUtil;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
-
+    
+    //private final CorsFilter corsFilter;
+    //private final CorsConfigurationSource corsConfigurationSource;
+    
     private static final String[] AUTH_WHITELIST = {
             "/api/v1/member/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
             "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/api/v1/auth/**"
@@ -40,7 +43,10 @@ public class SecurityConfig  {
         //CSRF, CORS
         http.csrf((csrf) -> csrf.disable());
         http.cors(Customizer.withDefaults());
-
+        
+        //http.addFilter(corsFilter);
+        //http.cors(cors -> cors.configurationSource(corsConfigurationSource));
+        
         //세션 관리 상태 없음으로 구성, Spring Security가 세션 생성 or 사용 X
         http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(
                 SessionCreationPolicy.STATELESS));

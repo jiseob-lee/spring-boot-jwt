@@ -11,6 +11,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import rg.jwt.service.CustomUserDetailsService;
@@ -46,6 +47,11 @@ public class JwtAuthFilter extends OncePerRequestFilter { // OncePerRequestFilte
 	            if (jwtUtil.validateToken(token)) {
 	                String userId = jwtUtil.getUserId(token);
 	
+	                //HttpSession session = request.getSession();
+	                //session.setAttribute("userId", userId);
+	                
+	                log.info("userId 222 : " + userId);
+	                
 	                //유저와 토큰 일치 시 userDetails 생성
 	                UserDetails userDetails = customUserDetailsService.loadUserByUsername(userId.toString());
 	
@@ -54,6 +60,9 @@ public class JwtAuthFilter extends OncePerRequestFilter { // OncePerRequestFilte
 	                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
 	                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 	
+	                    log.info("userDetails != null");
+	                    log.info("Username : " + userDetails.getUsername());
+	                    
 	                    //현재 Request의 Security Context에 접근권한 설정
 	                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 	                }

@@ -35,6 +35,9 @@ public class Member {
     @Column(name = "user_password", nullable = false)
     private String password;
 
+    @Column(name = "user_id", nullable = false)
+    private String userId;
+    
     //@Enumerated(EnumType.STRING)
     //@Column(name = "ROLE", nullable = true)
     //private RoleType role;

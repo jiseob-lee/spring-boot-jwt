@@ -1,11 +1,11 @@
 package rg.jwt.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,8 @@ import rg.jwt.util.HibernateUtil;
 public class BoardArticleService {
 
 	private final ModelMapper modelMapper;
+	
+	private final ModelMapper mapper;
 	
 	@Transactional
     public List<CustomBoardArticleDto> getBoardArticleList(int boardNo, int currentPage, int pageArticleCount) {
@@ -159,5 +161,22 @@ public class BoardArticleService {
 		return boardArticle;
 		
     }
-
+	
+	@Transactional
+	public void insertBoardArticle(BoardArticle boardArticle) {
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.getCurrentSession();
+		
+		Transaction trans = session.beginTransaction();
+		
+		//BoardArticle boardArticle = (BoardArticle)customBoardArticleDto;
+		
+		//BoardArticle boardArticle = mapper.map(customBoardArticleDto, BoardArticle.class);
+		
+		session.persist(boardArticle);
+		
+		//session.getTransaction().commit();
+		trans.commit();
+	}
 }

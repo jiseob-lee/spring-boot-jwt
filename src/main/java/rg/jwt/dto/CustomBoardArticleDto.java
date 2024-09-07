@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -49,7 +50,32 @@ public class CustomBoardArticleDto extends BoardArticle {
 	private String boardName;
 	
 	private String boardNameEn;
-
+	
+	
+	
+	public CustomBoardArticleDto(int boardIdx, String subject, String content, int hitCount, String dateCreated,
+			String userIdCreated, String dateModified, String userIdModified, char deleteYn, char openYn,
+			String subjectEng, String contentEng, String boardName, String boardNameEn) {
+		super(boardIdx, subject, content, hitCount, dateCreated,
+				userIdCreated, dateModified, userIdModified, deleteYn, openYn,
+				subjectEng, contentEng);
+		this.boardIdx = boardIdx;
+		this.subject = subject;
+		this.content = content;
+		this.hitCount = hitCount;
+		this.dateCreated = dateCreated;
+		this.userIdCreated = userIdCreated;
+		this.dateModified = dateModified;
+		this.userIdModified = userIdModified;
+		this.deleteYn = deleteYn;
+		this.openYn = openYn;
+		this.subjectEng = subjectEng;
+		this.contentEng = contentEng;
+		this.boardName = boardName;
+		this.boardNameEn = boardNameEn;
+	}
+	
+	
 	public String getDateCreated() {
 		if (dateCreated == null) {
 			return "";

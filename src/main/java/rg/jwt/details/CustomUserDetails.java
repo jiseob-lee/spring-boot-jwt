@@ -61,6 +61,10 @@ public class CustomUserDetails implements UserDetails {
         return member.getMemberId().toString();
     }
 
+    public String getUserId() {
+        return member.getUserId().toString();
+    }
+
 
     @Override
     public boolean isAccountNonExpired() {
