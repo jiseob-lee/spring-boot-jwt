@@ -344,7 +344,7 @@ public class BoardApiController {
     			.subject(boardTitle)
     			.content(boardContent)
     			.hitCount(0)
-    			.openYn('Y')
+    			.openYn('N')
     			.deleteYn('N')
     			.dateCreated(currentStimeStr)
     			.dateModified(currentStimeStr)
