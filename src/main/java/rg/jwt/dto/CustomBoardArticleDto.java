@@ -13,7 +13,6 @@ import lombok.Setter;
 import rg.jwt.entity.BoardArticle;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -53,10 +52,10 @@ public class CustomBoardArticleDto extends BoardArticle {
 	
 	
 	
-	public CustomBoardArticleDto(int boardIdx, String subject, String content, int hitCount, String dateCreated,
+	public CustomBoardArticleDto(int boardIdx, int boardArticleIdx, String subject, String content, int hitCount, String dateCreated,
 			String userIdCreated, String dateModified, String userIdModified, char deleteYn, char openYn,
 			String subjectEng, String contentEng, String boardName, String boardNameEn) {
-		super(boardIdx, subject, content, hitCount, dateCreated,
+		super(boardIdx, boardArticleIdx, subject, content, hitCount, dateCreated,
 				userIdCreated, dateModified, userIdModified, deleteYn, openYn,
 				subjectEng, contentEng);
 		this.boardIdx = boardIdx;

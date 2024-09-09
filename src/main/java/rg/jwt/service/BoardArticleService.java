@@ -57,7 +57,7 @@ public class BoardArticleService {
 		// Inner join between Employee and Address
 		//Query query = session.createQuery("select c.boardArticleIdx, d.boardIdx from BoardArticle c INNER JOIN Board d ON c.boardIdx = d.boardIdx", BoardArticle.class);
 		
-		Query<Object[]> query = session.createQuery("from BoardArticle c INNER JOIN Board d ON c.boardIdx = d.boardIdx where c.boardIdx = :boardIdx", Object[].class);
+		Query<Object[]> query = session.createQuery("from BoardArticle c INNER JOIN Board d ON c.boardIdx = d.boardIdx where c.boardIdx = :boardIdx and c.deleteYn = 'N'", Object[].class);
 		
 		query.setParameter("boardIdx", boardNo);
 		
@@ -175,6 +175,70 @@ public class BoardArticleService {
 		//BoardArticle boardArticle = mapper.map(customBoardArticleDto, BoardArticle.class);
 		
 		session.persist(boardArticle);
+		
+		//session.getTransaction().commit();
+		trans.commit();
+	}
+
+	@Transactional
+	public void updateBoardArticle(BoardArticle boardArticle) {
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.getCurrentSession();
+		
+		Transaction trans = session.beginTransaction();
+		
+		//BoardArticle boardArticle = (BoardArticle)customBoardArticleDto;
+		
+		//BoardArticle boardArticle = mapper.map(customBoardArticleDto, BoardArticle.class);
+
+		Query<BoardArticle> query = session.createQuery("from BoardArticle c where c.boardArticleIdx = :boardArticleIdx", BoardArticle.class);
+		
+		query.setParameter("boardArticleIdx", boardArticle.getBoardArticleIdx());
+		
+		//query.setFirstResult(0);
+		//query.setMaxResults(10);
+		
+		BoardArticle boardArticle1 = query.getSingleResult();
+		
+		boardArticle1.setSubject(boardArticle.getSubject());
+		boardArticle1.setContent(boardArticle.getContent());
+		boardArticle1.setDateModified(boardArticle.getDateModified());
+		boardArticle1.setUserIdModified(boardArticle.getUserIdModified());
+		
+		session.persist(boardArticle1);
+		
+		//session.getTransaction().commit();
+		trans.commit();
+	}
+
+
+	@Transactional
+	public void deleteBoardArticle(BoardArticle boardArticle) {
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.getCurrentSession();
+		
+		Transaction trans = session.beginTransaction();
+		
+		//BoardArticle boardArticle = (BoardArticle)customBoardArticleDto;
+		
+		//BoardArticle boardArticle = mapper.map(customBoardArticleDto, BoardArticle.class);
+
+		Query<BoardArticle> query = session.createQuery("from BoardArticle c where c.boardArticleIdx = :boardArticleIdx", BoardArticle.class);
+		
+		query.setParameter("boardArticleIdx", boardArticle.getBoardArticleIdx());
+		
+		//query.setFirstResult(0);
+		//query.setMaxResults(10);
+		
+		BoardArticle boardArticle1 = query.getSingleResult();
+		
+		boardArticle1.setDeleteYn(boardArticle.getDeleteYn());
+		boardArticle1.setDateModified(boardArticle.getDateModified());
+		boardArticle1.setUserIdModified(boardArticle.getUserIdModified());
+		
+		session.persist(boardArticle1);
 		
 		//session.getTransaction().commit();
 		trans.commit();

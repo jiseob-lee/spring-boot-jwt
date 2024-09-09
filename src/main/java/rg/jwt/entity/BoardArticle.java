@@ -184,10 +184,11 @@ public class BoardArticle {
 	
 
 	@Builder
-	public BoardArticle(int boardIdx, String subject, String content, int hitCount, String dateCreated,
+	public BoardArticle(int boardIdx, int boardArticleIdx, String subject, String content, int hitCount, String dateCreated,
 			String userIdCreated, String dateModified, String userIdModified, char deleteYn, char openYn,
 			String subjectEng, String contentEng) {
 		this.boardIdx = boardIdx;
+		this.boardArticleIdx = boardArticleIdx;
 		this.subject = subject;
 		this.content = content;
 		this.hitCount = hitCount;

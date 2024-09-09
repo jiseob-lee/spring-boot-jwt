@@ -357,4 +357,130 @@ public class BoardApiController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
     }
 
+	
+	//@PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN', 'ROLE_NORMAL')")
+    @PostMapping("updateBoardArticle")
+    public ResponseEntity<String> updateBoardArticle(HttpServletRequest request, 
+    		@RequestBody Map<String, Object> input
+    		) {
+		
+		log.info("insertBoardArticle.111.");
+		
+		String authorizationHeader = request.getHeader("Authorization");
+		log.info("authorizationHeader 4 : " + authorizationHeader);
+		
+    	int articleId = 0;
+    	
+    	String boardTitle = "";
+    	String boardContent = "";
+    	
+    	
+    	if (input != null) {
+    		log.info("string : " + input.get("articleId"));
+    		if (input.get("articleId") != null && !"".equals(input.get("articleId"))) {
+    			articleId = Integer.parseInt(String.valueOf(input.get("articleId")));
+    		}
+    		if (input.get("boardTitle") != null && !"".equals(input.get("boardTitle"))) {
+    			boardTitle = String.valueOf(input.get("boardTitle"));
+    		}
+    		if (input.get("boardContent") != null && !"".equals(input.get("boardContent"))) {
+    			boardContent = String.valueOf(input.get("boardContent"));
+    		}
+    	}
+    	
+		
+    	if (articleId == 0) {
+    		return new ResponseEntity<String>("empty articleId", HttpStatus.OK);
+    	}
+    	
+    	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String currentStimeStr = formatter.format(new Date(System.currentTimeMillis()));
+    	
+    	String token = authorizationHeader.substring(7);
+    	String userId = jwtUtil.getUserId(token);
+    	
+    	log.info("articleId : " + articleId);
+    	log.info("boardTitle : " + boardTitle);
+    	log.info("boardContent : " + boardContent);
+    	
+    	log.info("userId : " + userId);
+    	
+    	UserDetails userDetails = customUserDetailsService.loadUserByUsername(userId.toString());
+    	
+    	if (userDetails != null) {
+    		CustomUserDetails customUserDetails = (CustomUserDetails)userDetails;
+    		userId = customUserDetails.getUserId();
+    	}
+    	
+    	BoardArticle boardArticle = BoardArticle.builder()
+    			.boardArticleIdx(articleId)
+    			.subject(boardTitle)
+    			.content(boardContent)
+    			.dateModified(currentStimeStr)
+    			.userIdModified(userId)
+    			.build();
+    	
+    	boardArticleService.updateBoardArticle(boardArticle);    	
+		
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+    }
+
+	
+	//@PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN', 'ROLE_NORMAL')")
+    @PostMapping("deleteBoardArticle")
+    public ResponseEntity<String> deleteBoardArticle(HttpServletRequest request, 
+    		@RequestBody Map<String, Object> input
+    		) {
+		
+		log.info("insertBoardArticle.111.");
+		
+		String authorizationHeader = request.getHeader("Authorization");
+		log.info("authorizationHeader 4 : " + authorizationHeader);
+		
+    	int articleId = 0;
+    	
+    	
+    	if (input != null) {
+    		log.info("string : " + input.get("articleId"));
+    		if (input.get("articleId") != null && !"".equals(input.get("articleId"))) {
+    			articleId = Integer.parseInt(String.valueOf(input.get("articleId")));
+    		}
+    	}
+    	
+		
+    	if (articleId == 0) {
+    		return new ResponseEntity<String>("empty articleId", HttpStatus.OK);
+    	}
+    	
+    	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String currentStimeStr = formatter.format(new Date(System.currentTimeMillis()));
+    	
+    	String token = authorizationHeader.substring(7);
+    	String userId = jwtUtil.getUserId(token);
+    	
+    	log.info("articleId : " + articleId);
+    	
+    	log.info("userId : " + userId);
+    	
+    	UserDetails userDetails = customUserDetailsService.loadUserByUsername(userId.toString());
+    	
+    	if (userDetails != null) {
+    		CustomUserDetails customUserDetails = (CustomUserDetails)userDetails;
+    		userId = customUserDetails.getUserId();
+    	}
+    	
+    	BoardArticle boardArticle = BoardArticle.builder()
+    			.boardArticleIdx(articleId)
+    			.deleteYn('Y')
+    			.dateModified(currentStimeStr)
+    			.userIdModified(userId)
+    			.build();
+    	
+    	boardArticleService.deleteBoardArticle(boardArticle);    	
+		
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+    }
+
 }
