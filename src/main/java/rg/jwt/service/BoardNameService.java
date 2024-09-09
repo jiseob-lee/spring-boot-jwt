@@ -27,7 +27,7 @@ public class BoardNameService {
     public List<CustomBoardDto> getBoardNameList() {
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		//Session session = sessionFactory.openSession();
 
 		session.beginTransaction();

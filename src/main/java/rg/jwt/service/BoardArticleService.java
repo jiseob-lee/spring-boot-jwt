@@ -32,7 +32,7 @@ public class BoardArticleService {
     	
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		//Session session = sessionFactory.openSession();
 
 		session.beginTransaction();
@@ -108,7 +108,7 @@ public class BoardArticleService {
     	
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		//Session session = sessionFactory.openSession();
 
 		session.beginTransaction();
@@ -138,7 +138,7 @@ public class BoardArticleService {
     	
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		//Session session = sessionFactory.openSession();
 
 		session.beginTransaction();
@@ -166,7 +166,7 @@ public class BoardArticleService {
 	public void insertBoardArticle(BoardArticle boardArticle) {
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		
 		Transaction trans = session.beginTransaction();
 		
@@ -178,13 +178,15 @@ public class BoardArticleService {
 		
 		//session.getTransaction().commit();
 		trans.commit();
+		
+		//HibernateUtil.getSessionFactory().close();
 	}
 
 	@Transactional
 	public void updateBoardArticle(BoardArticle boardArticle) {
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		
 		Transaction trans = session.beginTransaction();
 		
@@ -210,6 +212,8 @@ public class BoardArticleService {
 		
 		//session.getTransaction().commit();
 		trans.commit();
+		
+		//HibernateUtil.getSessionFactory().close();
 	}
 
 
@@ -217,7 +221,7 @@ public class BoardArticleService {
 	public void deleteBoardArticle(BoardArticle boardArticle) {
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		
 		Transaction trans = session.beginTransaction();
 		
@@ -242,5 +246,7 @@ public class BoardArticleService {
 		
 		//session.getTransaction().commit();
 		trans.commit();
+		
+		//HibernateUtil.getSessionFactory().close();
 	}
 }

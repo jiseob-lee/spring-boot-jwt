@@ -1,10 +1,13 @@
 package rg.jwt.util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class DateTimeUtil {
 
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
@@ -27,6 +30,7 @@ public class DateTimeUtil {
 			return null;
 		}
 	    try {
+	    	log.info("timestamp : " + timestamp);
 	        return new Timestamp(DATE_TIME_FORMAT.parse(timestamp).getTime());
 	    } catch (ParseException e) {
 	        throw new IllegalArgumentException(e);
