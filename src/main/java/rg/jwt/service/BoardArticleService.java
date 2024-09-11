@@ -113,7 +113,7 @@ public class BoardArticleService {
 
 		session.beginTransaction();
 
-		Query<Long> query = session.createQuery("select count(*) from BoardArticle c where c.boardIdx = :boardIdx", Long.class);
+		Query<Long> query = session.createQuery("select count(*) from BoardArticle c where c.boardIdx = :boardIdx and c.deleteYn = 'N'", Long.class);
 		
 		query.setParameter("boardIdx", boardNo);
 		
