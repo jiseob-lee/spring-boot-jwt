@@ -62,6 +62,7 @@ public class JwtAuthFilter extends OncePerRequestFilter { // OncePerRequestFilte
 	
 	                    log.info("userDetails != null");
 	                    log.info("Username : " + userDetails.getUsername());
+	                    log.info("getAuthorities : " + userDetails.getAuthorities());
 	                    
 	                    //현재 Request의 Security Context에 접근권한 설정
 	                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

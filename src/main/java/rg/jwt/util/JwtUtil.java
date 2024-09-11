@@ -217,7 +217,21 @@ public class JwtUtil {
         Claims claims = Jwts.claims();
         claims.put("memberId", memberId);
         claims.put("email", email);
-        claims.put("role", roles);
+        //claims.put("role", roles);
+        
+        @SuppressWarnings("unchecked")
+		List<UserRoles> userRoles = (List<UserRoles>)roles;
+        List<RoleType> roleTypes = new ArrayList<>();
+        if (userRoles != null && userRoles.size() > 0) {
+        	
+        	for (int i=0; i < userRoles.size(); i++) {
+        		log.info("UserRole : " + userRoles.get(i).getUserRole());
+        		roleTypes.add(userRoles.get(i).getUserRole());
+        	}
+        	log.info(roleTypes.toString());
+        	claims.put("role", roleTypes);
+        }
+        
 
         //Date now = new Date();
 
