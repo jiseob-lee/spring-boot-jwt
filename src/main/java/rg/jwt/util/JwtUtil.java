@@ -193,10 +193,21 @@ public class JwtUtil {
             //Jws<Claims> claims = Jwts.parser().setSigningKey(refreshSecretKey).parseClaimsJws(refreshToken);
             Claims claims = parseClaims(refreshToken);
 
+            @SuppressWarnings("unchecked")
+            List<UserRoles> userRoles = (List<UserRoles>)claims.get("roles");
+            log.info("userRoles : " + userRoles);
+            
+            @SuppressWarnings("unchecked")
+			List<UserRoles> userRole = (List<UserRoles>)claims.get("role");
+            log.info("userRole : " + userRole);
+            
             //refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성합니다.
             if (!claims.getExpiration().before(new Date())) {
+            	log.info("리프레시 토큰이 유효");
                 return recreationAccessToken(claims.get("memberId").toString(), 
-                		claims.get("email").toString(), claims.get("roles"));
+                		claims.get("email").toString(), claims.get("role"));
+            } else {
+            	log.info("리프레시 토큰이 만료된.");
             }
         }catch (Exception e) {
 
@@ -209,7 +220,7 @@ public class JwtUtil {
     }
     
     
-    public String recreationAccessToken(String memberId, String email, Object roles){
+    public String recreationAccessToken(String memberId, String email, Object role){
 
         //Claims claims = Jwts.claims().setSubject(userEmail); // JWT payload 에 저장되는 정보단위
         //claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
@@ -219,19 +230,34 @@ public class JwtUtil {
         claims.put("email", email);
         //claims.put("role", roles);
         
+        log.info("recreationAccessToken");
+        
         @SuppressWarnings("unchecked")
-		List<UserRoles> userRoles = (List<UserRoles>)roles;
+		List<RoleType> userRoles = (List<RoleType>)role;
+        
+        log.info("userRoles : " + userRoles);
+        
         List<RoleType> roleTypes = new ArrayList<>();
+        
         if (userRoles != null && userRoles.size() > 0) {
-        	
-        	for (int i=0; i < userRoles.size(); i++) {
-        		log.info("UserRole : " + userRoles.get(i).getUserRole());
-        		roleTypes.add(userRoles.get(i).getUserRole());
+        
+        	try {
+	        	for (int i=0; i < userRoles.size(); i++) {
+	        		RoleType roleType = RoleType.valueOf(String.valueOf(userRoles.get(i)));
+	        		log.info("UserRole 1 : " + roleType);
+	        		roleTypes.add(roleType);
+	        	}
+        	} catch (Exception e) {
+        		log.info(e.getMessage());
         	}
-        	log.info(roleTypes.toString());
+        	
+        	log.info("roleTypes : " + roleTypes.toString());
+        	
         	claims.put("role", roleTypes);
         }
         
+        
+        log.info("claims 세팅 완료");
 
         //Date now = new Date();
 
@@ -256,6 +282,8 @@ public class JwtUtil {
                 // signature 에 들어갈 secret값 세팅
                 //.compact();
 
+        log.info("new accessToken : " + accessToken);
+        
         return accessToken;
     }
     
