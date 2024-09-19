@@ -2,6 +2,8 @@ package rg.jwt.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -34,6 +36,18 @@ public class UploadImageController {
 	//@PostMapping(value = "boardArticleList", consumes="application/json")
     public ResponseEntity<String> uploadImage(HttpServletRequest request) {
 
+
+		try {
+			
+			String hostname = InetAddress.getLocalHost().getHostName();
+			
+			if ("jisblee.me".equals(hostname)) {
+				imageUploadPath = "/home/tomcat/uploads/images/";
+			}
+			
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 		
 		String serverFileName = getServerFileName();
 

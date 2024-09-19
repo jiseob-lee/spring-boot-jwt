@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,6 +53,18 @@ public class UploadExcelController {
     @PostMapping("uploadExcel")
 	//@PostMapping(value = "boardArticleList", consumes="application/json")
     public ResponseEntity<Object> uploadExcel(HttpServletRequest request) {
+		
+		try {
+			
+			String hostname = InetAddress.getLocalHost().getHostName();
+			
+			if ("jisblee.me".equals(hostname)) {
+				imageUploadPath = "/home/tomcat/uploads/excels/";
+			}
+			
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 		
 		JSONObject sheetsJsonObject = new JSONObject();
 		
