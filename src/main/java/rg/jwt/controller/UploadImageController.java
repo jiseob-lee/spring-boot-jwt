@@ -129,7 +129,7 @@ public class UploadImageController {
 		        File targetFile = new File(fileNew);
 		        multipartFile.transferTo(targetFile);
 		        
-		        targetFile.setReadable(true);
+		        targetFile.setReadable(true, false);
 		        
 		        /*
 		        if (!fileUploadPath.startsWith("E:/")) {
