@@ -8,7 +8,7 @@
     <property name="LOG_NAME_PATTERN" value="D:\\work\\boot_log\\application-%d{yyyy-MM-dd}.%i.log" />
     <property name="MAX_FILE_SIZE" value="10MB" />
     <property name="TOTAL_SIZE" value="30MB" />
-    <property name="MAX_HISTORY" value="2" />
+    <property name="MAX_HISTORY" value="50" />
 
 
     <!-- Console appender 설정 -->
