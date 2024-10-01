@@ -4,11 +4,18 @@
         "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+        
+        <!--
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 		<property name="hibernate.connection.url">jdbc:mysql://jisblee.me:3306/rg?autoReconnect=true&amp;verifyServerCertificate=true&amp;useSSL=true&amp;requireSSL=true&amp;trustCertificateKeyStoreUrl=file:///home/ubuntu/mysql_certs_2024/truststore&amp;trustCertificateKeyStorePassword=jiseob9123&amp;clientCertificateKeyStoreUrl=file:///home/ubuntu/mysql_certs_2024/keystore&amp;clientCertificateKeyStorePassword=jiseob9123</property>
         <property name="hibernate.connection.username">rg</property>
         <property name="hibernate.connection.password">jiseob9123</property>
         <property name="hibernate.connection.pool_size">30</property>
+        -->
+        
+        <property name="hibernate.connection.datasource">jdbc/MySQLDB</property>
+        
+        
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
         <!-- <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property> -->
