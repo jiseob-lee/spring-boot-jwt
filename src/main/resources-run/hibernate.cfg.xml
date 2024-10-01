@@ -13,7 +13,7 @@
         <property name="hibernate.connection.pool_size">30</property>
         -->
         
-        <property name="hibernate.connection.datasource">jdbc/MySQLDB</property>
+        <property name="hibernate.connection.datasource">java:comp/env/jdbc/MySQLDB</property>
         
         
         <property name="hibernate.current_session_context_class">thread</property>
