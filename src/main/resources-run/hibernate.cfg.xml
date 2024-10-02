@@ -24,10 +24,10 @@
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
         
-
+		<!--
 		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
-		<property name="hibernate.c3p0.min_size">10</property>
-		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.min_size">2</property>
+		<property name="hibernate.c3p0.max_size">5</property>
 		<property name="hibernate.c3p0.acquire_increment">1</property>
 		<property name="hibernate.c3p0.idle_test_period">3000</property>
 		<property name="hibernate.c3p0.max_statements">50</property>
@@ -35,7 +35,8 @@
 		<property name="hibernate.c3p0.validate">1800</property>
 		<property name="hibernate.c3p0.unreturnedConnectionTimeout">30</property>
 		<property name="hibernate.c3p0.debugUnreturnedConnectionStackTraces">true</property>
-
+		-->
+		
 		<mapping class="rg.jwt.entity.Board"/>
 		<mapping class="rg.jwt.entity.BoardArticle"/>
 		
