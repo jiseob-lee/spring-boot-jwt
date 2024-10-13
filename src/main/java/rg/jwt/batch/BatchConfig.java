@@ -21,10 +21,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class BatchConfig {
 	
 	private final JobRegistry jobRegistry;
@@ -60,7 +62,7 @@ public class BatchConfig {
         	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         	String formattedDate = now.format(formatter);
         	
-        	System.out.println(formattedDate + " : ***** hello batch! ***** : " + time);
+        	log.info(formattedDate + " : ***** hello batch! ***** : " + time);
         	
         	// 원하는 비지니스 로직 작성
         	

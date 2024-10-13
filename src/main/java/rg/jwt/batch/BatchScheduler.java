@@ -23,10 +23,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import rg.jwt.controller.AuthApiController;
 
 @Configuration
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class BatchScheduler {
 
     private final JobLauncher jobLauncher;
@@ -65,7 +68,7 @@ public class BatchScheduler {
     @Scheduled(cron = "0 0/5 * * * *") // 10초마다 실행
     public void runJob() {
         String time = LocalDateTime.now().toString();
-        System.out.println("time : " + time);
+        log.info("time : " + time);
         try {
             Job job = jobRegistry.getJob("testJob"); // job 이름
             JobParametersBuilder jobParam = new JobParametersBuilder().addString("time", time);
