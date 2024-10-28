@@ -26,7 +26,7 @@
         <echo>[start] Make WAR Deploy File</echo>
         <echo>=======================================================</echo>
         <delete file="${target.dir}/${was.war.filename}" />
-        <war destfile="${target.dir}/${was.war.filename}" basedir="${target.dir}/rg-0.0.1-SNAPSHOT">
+        <war destfile="${target.dir}/${was.war.filename}" basedir="${target.dir}/rg-0.0.1-SNAPSHOT" needxmlfile="false">
             <include name="**/*" />
         </war>
         <echo>=====================================================</echo>
