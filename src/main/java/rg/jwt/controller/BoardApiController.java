@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -147,6 +148,126 @@ public class BoardApiController {
 		//}
 		
 		return new ResponseEntity<List<CustomBoardArticleDto>>(articleList, HttpStatus.OK);
+		
+    }
+
+	
+	//@PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')")
+	//@PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN', 'ROLE_NORMAL')")
+	@PreAuthorize("permitAll")
+	@PostMapping("boardArticleList2")
+	//@PostMapping(value = "boardArticleList", consumes="application/json")
+    public ResponseEntity<Map<String, Object>> getBoardArticleList2(HttpServletRequest request, 
+    		//@RequestParam Map<String, String> paramMap
+    		//, 
+    		@RequestBody Map<String, Object> input
+    		) {
+		
+		//String authorizationHeader = request.getHeader("Authorization");
+		//log.info("authorizationHeader 333 : " + authorizationHeader);
+
+		
+		String authorizationHeader = request.getHeader("Authorization");
+		
+		log.info("authorizationHeader 333 : " + authorizationHeader);
+		
+
+		String token = authorizationHeader.substring(7);
+		
+		jwtUtil.checkClaims(token);
+		//String userId = jwtUtil.getUserId(token);
+		String userId = jwtUtil.getUserId(token);
+		
+		log.info("userId 333 : " + userId);
+		
+		log.info("authorizationHeader 333 : " + authorizationHeader);
+		
+		//HttpSession session = request.getSession();
+		//String userId = (String)session.getAttribute("userId");
+		
+		
+		
+    	int boardNo = 0;
+    	int currentPage = 1;
+    	int pageArticleCount = 10;
+    	
+    	
+    	if (input != null) {
+    		log.info("string : " + input.get("boardNo"));
+    		if (input.get("boardNo") != null && !"".equals(input.get("boardNo"))) {
+    			boardNo = Integer.parseInt(String.valueOf(input.get("boardNo")));
+    		}
+    		if (input.get("currentPage") != null && !"".equals(input.get("currentPage"))) {
+    			currentPage = Integer.parseInt(String.valueOf(input.get("currentPage")));
+    		}
+    		if (input.get("pageArticleCount") != null && !"".equals(input.get("pageArticleCount"))) {
+    			pageArticleCount = Integer.parseInt(String.valueOf(input.get("pageArticleCount")));
+    		}
+    	}
+    	
+		
+    	log.info("boardNo : " + boardNo);
+    	log.info("currentPage : " + currentPage);
+    	log.info("pageArticleCount : " + pageArticleCount);
+    	
+    	
+    	//Enumeration<String> paramEnum = request.getParameterNames();
+    	
+    	//while (paramEnum.hasMoreElements()) {
+    		//log.info("paramIter2 : " + paramEnum.nextElement());
+    	//}
+    	
+    	//Iterator<String> paramIter1 = paramEnum.asIterator();
+    	//while (paramIter1.hasNext()) {
+    		//log.info("paramIter1 : " + paramIter1.next());
+    	//}
+    	
+    	//Map <String, String[]> param = request.getParameterMap();
+    	//log.info("param : " + param);
+    	
+    	//Set<String> paramSet = param.keySet();
+    	//Iterator<String> paramIter = paramSet.iterator();
+    	//while (paramIter.hasNext()) {
+    		//log.info("param iter : " + param.get(paramIter.next()));
+    	//}
+    	
+		//log.info("paramMap : " + paramMap);
+		//log.info("boardNo : " + boardNo);
+		
+    	if (boardNo == 0) {
+    		return new ResponseEntity<Map<String, Object>>(new HashMap<>(), HttpStatus.OK);
+    	}
+    	
+    	//log.info("#### boardNo : " + boardNo);
+    	//log.info("#### currentPage : " + currentPage);
+    	//log.info("#### pageArticleCount : " + pageArticleCount);
+    	
+		List<CustomBoardArticleDto> articleList = boardArticleService.getBoardArticleList(boardNo, currentPage, pageArticleCount);
+		
+		//log.info("#### size : " + articleList.size());
+		
+		//if (articleList != null && articleList.size() > 0) {
+			//for (int i=0; i < articleList.size(); i++) {
+				//CustomBoardArticleDto article = articleList.get(i);
+				//log.info("Subject : " + article.getSubject());
+			//}
+		//}
+
+		Long boardTotalCount = boardArticleService.getBoardTotalCount(boardNo);
+		
+		
+		Map<String, Object> pageMap = new HashMap<>();
+		pageMap.put("total", boardTotalCount);
+		pageMap.put("page", currentPage);
+		pageMap.put("count", pageArticleCount);
+		
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("page", pageMap);
+		returnMap.put("lists", articleList);
+		
+		
+		return new ResponseEntity<Map<String, Object>>(returnMap, HttpStatus.OK);
 		
     }
 
