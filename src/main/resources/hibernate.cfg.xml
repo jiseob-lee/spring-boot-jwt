@@ -18,7 +18,7 @@
 		-->
 
 
-        <property name="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</property>
+        <property name="hibernate.connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
 
 
         <property name="hibernate.hikari.driverClassName">com.mysql.cj.jdbc.Driver</property>
