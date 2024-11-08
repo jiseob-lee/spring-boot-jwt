@@ -137,11 +137,13 @@
 		</dependency>
 		-->
 
+		<!--
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<!-- <version>6.5.2.Final</version> -->
+			<- <version>6.5.2.Final</version> ->
 		</dependency>
+		-->
     
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
@@ -215,15 +217,15 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-hikaricp</artifactId>
-			<version>6.6.1.Final</version>
+			<!-- <version>6.6.1.Final</version> -->
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>6.6.1.Final</version>
+			<!-- <version>6.6.1.Final</version> -->
 		</dependency>
 		
 	</dependencies>
@@ -235,10 +237,11 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			
+			<!--
 			<plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-failsafe-plugin</artifactId>
-			    <!-- <version>3.2.1</version> -->
+			    <- <version>3.2.1</version> ->
 			    <configuration>
 			        <argLine>-Xshare:off</argLine>
 			    </configuration>
@@ -252,6 +255,7 @@
 			        </execution>
 			    </executions>
 			</plugin>
+			-->
 
 			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
