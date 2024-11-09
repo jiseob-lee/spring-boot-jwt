@@ -5,8 +5,10 @@
 <mapper namespace="rg.jwt.mapper.BoardMapper">
 
     <select id="selectBoardList" resultType="String">
+    <![CDATA[
         select board_name
         from board
+    ]]>
     </select>
 
 </mapper>
