@@ -27,7 +27,7 @@
         <property name="hibernate.hikari.password">jiseob9123</property>
 
         <property name="hibernate.hikari.minimumIdle">2</property>
-        <property name="hibernate.hikari.maximumPoolSize">5</property>
+        <property name="hibernate.hikari.maximumPoolSize">50</property>
         <property name="hibernate.hikari.idleTimeout">30000</property>
         <property name="hibernate.hikari.leakDetectionThreshold">60000</property>
         
