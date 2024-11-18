@@ -11,8 +11,8 @@
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/rg?autoReconnect=true&amp;useSSL=false</property>
 
 
-		<property name="hibernate.connection.username">rg</property>
-		<property name="hibernate.connection.password">jiseob9123</property>
+		<property name="hibernate.connection.username">test</property>
+		<property name="hibernate.connection.password">test</property>
 		<!-- Connection Pool Size -->
 		<property name="hibernate.connection.pool_size">1</property>
 

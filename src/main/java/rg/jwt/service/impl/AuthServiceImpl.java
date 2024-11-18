@@ -39,11 +39,13 @@ public class AuthServiceImpl implements AuthService {
         String password = dto.getPassword();
         Member member = memberRepository.findMemberByEmail(email);
         if (member == null) {
+        	log.info("이메일이 존재하지 않습니다.");
             throw new UsernameNotFoundException("이메일이 존재하지 않습니다.");
         }
 
         // 암호화된 password를 디코딩한 값과 입력한 패스워드 값이 다르면 null 반환
         if (!encoder.matches(password, member.getPassword())) {
+        	log.info("비밀번호가 일치하지 않습니다.");
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
         

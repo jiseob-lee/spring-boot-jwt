@@ -32,8 +32,8 @@ public class JwtAuthFilter extends OncePerRequestFilter { // OncePerRequestFilte
 
     	String authorizationHeader = request.getHeader("Authorization");
 
-    	//log.info("authorizationHeader : " + authorizationHeader);
-    	//log.info("RequestURI : " + request.getRequestURI());
+    	log.info("authorizationHeader : " + authorizationHeader);
+    	log.info("RequestURI : " + request.getRequestURI());
     	
     	if (!request.getRequestURI().equals("/api/v1/auth/login")) {
 	        //JWT가 헤더에 있는 경우

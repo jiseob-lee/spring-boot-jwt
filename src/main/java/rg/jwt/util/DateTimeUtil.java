@@ -50,4 +50,17 @@ public class DateTimeUtil {
 		}
         return DATE_TIME_FORMAT.format(dateCreated);
 	}
+	
+	public static void main(String[] args) {
+		float c = (float) 11.05;
+		float d = 3;
+		
+		System.out.println("c : " + c);
+		System.out.println("d : " + d);
+		
+		float e = c * d;
+		
+		System.out.println("e : " + e);
+		
+	}
 }
