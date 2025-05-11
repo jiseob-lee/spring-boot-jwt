@@ -51,6 +51,7 @@ public class DateTimeUtil {
         return DATE_TIME_FORMAT.format(dateCreated);
 	}
 	
+	/*
 	public static void main(String[] args) {
 		float c = (float) 11.05;
 		float d = 3;
@@ -63,4 +64,5 @@ public class DateTimeUtil {
 		System.out.println("e : " + e);
 		
 	}
+	*/
 }

@@ -65,6 +65,10 @@
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ROLLING_LOG_FILE"/>
     </logger>
+    <logger name="org.springframework" level="DEBUG" additive="false" >
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLING_LOG_FILE"/>
+    </logger>
 
 <!--
 	<logger name="jdbc.sqlonly" level="TRUE">

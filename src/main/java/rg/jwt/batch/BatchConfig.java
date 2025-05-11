@@ -6,9 +6,7 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.DuplicateJobException;
-import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.configuration.support.ReferenceJobFactory;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -17,7 +15,6 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import lombok.RequiredArgsConstructor;
@@ -25,11 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @RequiredArgsConstructor
-@Component
+//@Component
 @Slf4j
 public class BatchConfig {
 	
-	private final JobRegistry jobRegistry;
+	//private final JobRegistry jobRegistry;
 	
     @Bean
     public Job testJob(JobRepository jobRepository,PlatformTransactionManager transactionManager) throws DuplicateJobException {
@@ -38,8 +35,8 @@ public class BatchConfig {
                .start(testStep(jobRepository,transactionManager))
                .build();
        
-       ReferenceJobFactory factory = new ReferenceJobFactory(job);
-       jobRegistry.register(factory);
+       //ReferenceJobFactory factory = new ReferenceJobFactory(job);
+       //jobRegistry.register(factory);
        
        //출처: https://meteorkor.tistory.com/87 [Meteor:티스토리]
        return job;

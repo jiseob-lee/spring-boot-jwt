@@ -65,7 +65,7 @@ public class BatchScheduler {
     }
 	*/
 	
-    @Scheduled(cron = "0 0/5 * * * *") // 10초마다 실행
+    @Scheduled(cron = "0 0/5 * * * *") // 5분마다 실행
     public void runJob() {
         String time = LocalDateTime.now().toString();
         log.info("time : " + time);
